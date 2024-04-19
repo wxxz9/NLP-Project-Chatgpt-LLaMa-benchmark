@@ -93,5 +93,5 @@ def main(api_key):
 
 
 if __name__ == "__main__":
-    api_key = "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"
+    api_key = ""
     main(api_key)
