@@ -22,7 +22,7 @@ def extract_questions_and_contexts(data):
                         "answer_text": qa['answers'][0]['text'],
                         "answer_start": qa['answers'][0]['answer_start']
                     })
-                if len(items) >= 50:
+                if len(items) >= 100000:
                     return items
     return items
 
@@ -82,14 +82,13 @@ def main(api_key):
             file.write(output)
             
             request_count += 1
-            if request_count >= 200:
-                print("Reached daily limit of 200 requests. Please try again tomorrow.")
-                break
+            if request_count % 100 == 0:
+                print(f"Processed {request_count} questions.")
 
         avg_em_score = total_em_score / len(items)
         avg_f1_score = total_f1_score / len(items)
-        print(f"Average Exact Match Score: {avg_em_score:.2f}")
-        print(f"Average F1 Score: {avg_f1_score:.2f}")
+        summary = f"Average Exact Match Score: {avg_em_score:.2f}\nAverage F1 Score: {avg_f1_score:.2f}\n"
+        file.write(summary)
 
 
 if __name__ == "__main__":
